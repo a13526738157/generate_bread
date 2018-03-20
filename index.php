@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 $lib_root = './whb_tools';
 $CorePath =realpath($lib_root.'/lib/Core.php');

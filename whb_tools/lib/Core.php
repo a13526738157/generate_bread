@@ -8,6 +8,7 @@
 
 class Core
 {
+    private $feature_name,$uc_feature_name,$lower_feautre_name,$lib_root;
     public function __construct($lib_root)
     {
         while (!$this->feature_name){
@@ -134,7 +135,7 @@ class Core
         $lower_feautre_name = $this->lower_feautre_name;
         $str = str_replace('{FEATURE_NAME_UC}',$uc_feature_name,$str);//替换控制器名称
         $str = str_replace('{FEATURE_NAME_L}',$lower_feautre_name,$str);//替换控制器名称
-        $str = str_replace('{PERMISSSION}',$lower_feautre_name,$str);
+        $str = str_replace('{PERMISSION}',$lower_feautre_name,$str);
     }
 
 
