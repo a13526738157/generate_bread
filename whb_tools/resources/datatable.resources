@@ -1,0 +1,102 @@
+<?php
+namespace App\DataTables;
+
+use Yajra\Datatables\Services\DataTable;
+use App\Models\{FEATURE_NAME_UC};
+class {FEATURE_NAME_UC}DataTable extends DataTable{
+    private $feature = '{FEATURE_NAME_L}';
+	/**
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function ajax()
+	{
+		return $this->datatables
+		->eloquent( $this->query())
+		->addColumn('action', 'admin.'.$this->feature.'.datatables_actions')
+		->make(true);
+	}
+
+	public function parseCondition( $query ){
+
+		if( $this->request()->has('condition') ){
+			$conditions = $this->request()->input('condition');
+
+			foreach ($conditions as $condition ){
+				if( $condition['op'] == 'like')
+					$query = $query->where( $condition['prop'], $condition['op'], '%'.$condition['value'].'%');
+				else
+					$query = $query->where( $condition['prop'], $condition['op'], $condition['value']);
+			}
+		}
+
+
+		return $query;
+	}
+
+	/**
+	 * Get the query object to be processed by datatables.
+	 *
+	 * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
+	 */
+	public function query()
+	{
+
+		return $this->applyScopes({FEATURE_NAME_UC}::query()->orderBy('created_at' , 'desc'));
+	}
+
+	/**
+	 * Optional method if you want to use html builder.
+	 *
+	 * @return \Yajra\Datatables\Html\Builder
+	 */
+	public function html()
+	{
+		return $this->builder()
+			->columns($this->getColumns())
+			->addAction(['width' => '20%'])
+			->ajax('')
+			->parameters([
+					'dom' => 'Brtip',
+					'language' =>[
+						'url' => '//cdn.datatables.net/plug-ins/1.10.12/i18n/Chinese.json',
+					],
+					'scrollX' => false,
+					'buttons' => [
+						[
+						'extend'  => 'collection',
+						'text'    => '<i class="fa fa-download"></i> 导出',
+						'buttons' => [
+								'csv',
+								'excel',
+								'pdf',
+							],
+						]
+					]
+			]);
+    }
+	/**
+	 * Get columns.
+	 *
+	 * @return array
+	 */
+	private function getColumns()
+	{
+		return [
+		'编号' => ['name' => 'id', 'data' => 'id'],
+		//'分类名' => ['name' => 'name', 'data' => 'name'],
+		//'父级id' => ['name' => 'pid', 'data' => 'pid'],
+		//'子类商品数量' => ['name' => 'count', 'data' => 'count'],
+        //'分类描述' => ['name' => 'description', 'data' => 'description']
+		];
+	}
+
+	/**
+	 * Get filename for export.
+	 *
+	 * @return string
+	 */
+	protected function filename()
+	{
+		return '{FEATURE_NAME_UC}';
+	}
+}

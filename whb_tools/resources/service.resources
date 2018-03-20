@@ -1,0 +1,26 @@
+<?php
+namespace App\Services;
+
+use App\Models\{FEATURE_NAME_UC};
+use App\Repositories\{FEATURE_NAME_UC}Repository;
+
+class {FEATURE_NAME_UC}Service{
+
+	protected $repo;
+
+	public function __construct() {
+		$this->repo = new {FEATURE_NAME_UC}Repository;
+	}
+
+
+
+	public function save( $data ){
+		$model = "";
+		$this->repo->store($data);
+		$model = $this->repo->getModel();
+
+		return $model;
+	}
+}
+
+

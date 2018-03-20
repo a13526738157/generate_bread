@@ -1,0 +1,125 @@
+<?php
+namespace App\Http\Controllers\Admin;
+
+use App\Models\{FEATURE_NAME_UC};
+use App\Http\Controllers\Controller;
+use App\DataTables\{FEATURE_NAME_UC}DataTable;
+use App\Http\Requests\Admin\{FEATURE_NAME_UC}Request;
+use Flash;
+use App\Services\{FEATURE_NAME_UC}Service;
+
+class {FEATURE_NAME_UC}Controller extends Controller{
+
+    private $feature = '{FEATURE_NAME_L}';
+    private $feature_title = '{FEATURE_NAME_UC}';
+    public function __construct(){
+
+    }
+
+    public function index({FEATURE_NAME_UC}DataTable $table){
+        if( ! \Entrust::ability('super_admin,admin','{PERMISSION}') )
+            exit('您暂未权限进行此操作。若需开通此权限，请联系超级管理员');
+
+        return $table->render('admin.'.$this->feature.'.index',[
+        'feature_title'=>$this->feature_title
+        ]);
+    }
+
+    public function create(){
+        return view('admin.'.$this->feature.'.create',[
+        'feature_title'=>$this->feature_title
+        ]);
+    }
+
+    public function store({FEATURE_NAME_UC}Request $request , {FEATURE_NAME_UC}Service $service){
+
+        $input = $request->all();
+
+        //$this->validate($request,['name' => 'required|max:255']);按需添加
+
+        $model = new {FEATURE_NAME_UC}( $input );
+
+        if( $model->save() ){
+            Flash::success('添加成功');
+            return redirect(route('admin.'.$this->feature.'.index'));
+        }else{
+            Flash::error('保存失败！');
+            return back();
+        }
+    }
+
+
+    public function show($id){
+
+        $data = {FEATURE_NAME_UC}::find($id);
+
+
+        return view('admin.'.$this->feature.'.show',[
+        'data'=>$data,
+        'feature_title'=>$this->feature_title
+        ]);
+
+    }
+
+
+
+    public function edit($id){
+
+        $data = {FEATURE_NAME_UC}::find($id);
+
+        if(empty($data)){
+            Flash::error('信息不存在');
+            return redirect(route('admin.'.$this->feature.'.index'));
+        }
+
+
+        return view('admin.'.$this->feature.'.edit',[
+        'data'  =>  $data,
+        'feature_title'=>$this->feature_title
+        ]);
+
+    }
+    public function update($id , {FEATURE_NAME_UC}Request $request , {FEATURE_NAME_UC}Service $service){
+
+        $model = {FEATURE_NAME_UC}::find($id);
+
+        if(! $model ){
+
+            Flash::error('信息不存在');
+
+            return redirect(route('admin.'.$this->feature.'.index'));
+        }
+
+        $model->fill( $request->all() );
+
+        $model->save();
+
+        return redirect(route('admin.'.$this->feature.'.index'));
+    }
+
+
+    /**
+     * Remove the specified Product from storage.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //        if( ! \Entrust::ability('super_admin,admin','{PERMISSION}-delete') )
+        //            exit('您暂未权限进行此操作。若需开通此权限，请联系超级管理员');
+
+        $model = {FEATURE_NAME_UC}::find($id);
+        if (!$model) {
+            Flash::error('信息不存在');
+            return redirect(route('admin.'.$this->feature.'.index'));
+        }
+
+        $model->delete();
+        Flash::success('删除成功');
+        return redirect(route('admin.'.$this->feature.'.index'));
+    }
+
+
+}

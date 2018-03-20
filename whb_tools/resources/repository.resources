@@ -1,0 +1,29 @@
+<?php
+
+
+namespace App\Repositories;
+
+use App\Models\{FEATURE_NAME_UC};
+use App\Repositories\BaseRepository;
+
+class {FEATURE_NAME_UC}Repository{
+
+	use BaseRepository;
+
+    public function model()
+    {
+        return {FEATURE_NAME_UC}::class;
+    }
+
+    public function __construct()
+    {
+    	$this->model = new {FEATURE_NAME_UC}();
+    }
+
+
+    public function updateOrCreate(array $attributes, array $values = []) {
+        return parent::updateOrCreate($attributes, $values);
+    }
+
+
+}

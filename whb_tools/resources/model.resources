@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Models;
+
+use Eloquent as Model;
+//use Illuminate\Database\Eloquent\SoftDeletes;
+
+
+class {FEATURE_NAME_UC} extends Model
+{
+	//use SoftDeletes;软删除
+
+	public $table = '{FEATURE_NAME_L}s';//表名
+
+
+	//protected $dates = ['deleted_at'];
+
+    //protected $appends = ['is_collect','collect_count','bidding_count'];额外字段
+
+    /**
+     * 在数组中隐藏的属性
+     *
+     * @var array
+     */
+    protected $hidden = [];
+
+
+	public $fillable = [
+	];
+
+	/**
+	 * The attributes that should be casted to native types.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+	    //例
+	    /**
+		/*'name' => 'string',
+		/*'price' => 'float',
+		/*'sell_price' => 'float',
+		/*'sku' => 'string',
+		/*'sold_out' => 'boolean'
+		**/
+	];
+
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
+	public static $rules = [
+	    //必填required,唯一unique:{$table},{$filed}
+	];
+
+	public static $messages=[
+	    //必填
+		//'name.required' => 'Name不能为空',
+		//唯一
+		//'sku.unique' => 'Sku不能重复',
+	];
+
+    //改变取出的字段值
+//    public function getCollectCountAttribute($value){
+//        $result  = ModelName::where('id', $this->id )
+//            ->count();
+//
+//        if( $result )
+//            return  $result;
+//        else
+//            return 0;
+//    }
+}

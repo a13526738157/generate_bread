@@ -1,0 +1,7 @@
+Route::get('{FEATURE_NAME_L}' , '{FEATURE_NAME_UC}Controller@index')->name('admin.{FEATURE_NAME_L}.index');
+Route::get('{FEATURE_NAME_L}/create' , '{FEATURE_NAME_UC}Controller@getCreate')->name('admin.{FEATURE_NAME_L}.create');
+Route::put('{FEATURE_NAME_L}/store' , '{FEATURE_NAME_UC}Controller@store')->name('admin.{FEATURE_NAME_L}.store');
+Route::get('{FEATURE_NAME_L}/edit/{id}' , '{FEATURE_NAME_UC}Controller@edit')->name('admin.{FEATURE_NAME_L}.edit');
+Route::patch('{FEATURE_NAME_L}/update/{id}' , '{FEATURE_NAME_UC}Controller@update')->name('admin.{FEATURE_NAME_L}.update');
+Route::delete('{FEATURE_NAME_L}/destroy/{id}', '{FEATURE_NAME_UC}Controller@destroy')->name('admin.{FEATURE_NAME_L}.destroy');
+
